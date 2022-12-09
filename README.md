@@ -15,10 +15,11 @@ Código de ejemplo de una aplicación Java mal hecha: https://github.com/framaz/
 
 ## Ejercicio guiado
 
-*Imagen para seleccionar el directorio (File -> New Target Directory):
+Para seleccionar el directorio adecuado, se debe ir a `File -> New Target Directory`:
+
 ![image](https://user-images.githubusercontent.com/80198607/206561947-ddc776c2-c40c-428c-8c24-c35410cf795b.png)
 
-## Análisis con filtrado
+### Análisis con filtrado
 Al estar analizando la seguridad de una aplicación completa, el número de posibles brechas de seguridad que encontramos en el código es muy alto. Así que, partiendo del análisis realizado en el ejercicio 1, vamos a comprobar las distintas opciones de filtrado y búsqueda que nos ofrece VCGrepper.
 
 En primer lugar, nos desplazamos a la sección Summary Table. Aquí aparece la lista completa de errores que se han encontrado en el código de la carpeta que estemos analizando. 
@@ -53,8 +54,7 @@ Este mismo fichero puede ser reimportado en VCGrepper a través de la opción *F
 ![imagen](https://user-images.githubusercontent.com/91279004/206575767-2d9b6f2b-f36f-44c6-9a8e-a76554be18fd.png)
 
 
-
-## Configuración Personalizada
+### Configuración Personalizada
 VisualCode Greeper cuenta con ciertas funciones, librerías, funciones OWASP etc que son consideradas como peligrosas, pero que ocurre si nosotros conocemos alguna que no este o simplemente queremos comprobar si están incluidas en las bases del programa. VisualCode Greeper cuenta con una serie de archivos que podemos inspeccionar e incluso editar en los cuales se incluyen las funciones, librerías etc que considera peligrosas y nos permite añadir las nuestras propias.
 Para ello:
 
@@ -81,8 +81,46 @@ Para ello:
 ![image](https://user-images.githubusercontent.com/105552988/206569615-f655d3b7-35ed-4931-9f72-d5aff738edf6.png)
 
 9.  Una vez escritas las guardamos en un directorio que consideremos apropiado con un nombre que nos ayude a identificarlas.
-10.   Corremos un scan general con los filtros para que solo salgan los errores médium y high que son el nivel de las funciones añadidas. Esto se ha enseñado anteriormente. Obtenemos los siguientes resultados:
+10.   Corremos un scan general con los filtros para que solo salgan los errores medium y high que son el nivel de las funciones añadidas. Esto se ha enseñado anteriormente. Obtenemos los siguientes resultados:
  ![image](https://user-images.githubusercontent.com/105552988/206569090-31eb505d-5d96-4dfd-9906-962df62b8489.png)
 
 11.  Como podemos ver aparecen las funciones añadidas.
 
+### Análisis global
+Visual Code Grepper tiene una ventana adicional para mostrar estadísticas globales, a la vez que por cada archivo. Para cada uno, podemos observar el número total
+de líneas así como su porcentaje respecto del total, el número de líneas de código real, el de comentadas o en blanco, así como los potenciales flags o breachas
+de seguridad. Para el entendimeinto de los datos, también proporciona un gráfico de sectores que se puede extender para cada archivo. Esto es útil para, entre
+otras cosas, detectar qué archivos presentan más brechas potenciales de seguridad, o cuáles conviene más dividir en otros de menor tamaño.
+
+*Esta ventana presenta un error cuando se hace doble clic sobre una de las cabeceras de la tabla para cambiar la ordenación. Sin embargo, basta con hacer clic en
+**Continuar** para volver a la ventana anterior sin ningún tipo de consecuencia.*
+
+![image](https://user-images.githubusercontent.com/80198607/206596805-f20b4cef-ecea-4aeb-b62d-a40e7e7ebfe6.png)
+
+Pasemos a observar las utilidades de esta ventana.
+
+1. Haga clic en `Scan -> Visual Code/Comment Breakdown`.
+2. Observe que se ha abierto una nueva ventana con el siguiente aspecto:
+
+![image](https://user-images.githubusercontent.com/80198607/206597067-280ae8ff-b489-4cf5-be3a-a7065dd26a11.png)
+
+3. Observe que es difícil saber qué ordenación es la actual, y parece no tener mucho sentido o utilidad. No pasa nada, ya la cambiaremos más adelante (es la
+ordenación por la ruta completa del archivo).
+
+4. Céntrese ahora en el gráfico de sectores en la parte superior, e intente comprenderlo. Después, observe las estadíticas globales en el recuadro que se
+encuentra justo debajo. A partir de estos datos, ¿le parece una proporción de líneas en blanco o comentadas adecuada? ¿Tiene el código suficientes comentarios?
+
+5. Supongamos ahora que es un analista de seguridad, y quiere disminuir el número de potenciales vulnerabilidades. Una opción sensata parece obtener los archivos
+con un mayor número de potenciales brechas de seguridad. Hágalo ordenando la tabla por esta columna. Para ello, haga clic en `Potentially Unsafe Code`.
+
+6. Observe que la ordenación actual es por código potencialmente peligroso, pero en orden *ascendente*. Como puede intuir, esta ordenación no es muy útil, así que
+proceda a hacerla *descendente*. Pulse en la flecha de la cabecera de la columna, junto al texto. ¿Qué archivo tiene más brechas potenciales de seguridad?
+
+7. Ahora, preste atención al archivo *TouchAndThreadParams,java*. Queremos obtener una vista más específica del archivo, así que haga doble clic sobre su fila correspondiente.
+
+8. Observe cómo se ha abierto una tercera ventana como la mostrada a continuación. Note que el gráfico ahora muestra los datos exclusivos para este archivo, que es
+lo que deseamos.
+
+![image](https://user-images.githubusercontent.com/80198607/206598609-3303855a-cc98-4ea1-86e0-46583b0c1841.png)
+
+9. Finalmente, cierre la ventana para volver a la anterior.
